@@ -1,0 +1,42 @@
+name: Deploy to Azure Static Web Apps
+
+on:
+  push:
+    branches:
+      - main  # Falls dein Haupt-Branch anders heißt, ändere es hier.
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches:
+      - main
+
+jobs:
+  build_and_deploy_job:
+    runs-on: ubuntu-latest
+    name: Build and Deploy Job
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install Dependencies
+        run: |
+          cd music-quiz  # Falls dein App-Ordner anders heißt, ändere es
+          npm install
+
+      - name: Build App
+        run: |
+          cd music-quiz
+          npm run build
+
+      - name: Deploy to Azure Static Web Apps
+        uses: Azure/static-web-apps-deploy@v1
+        with:
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          action: "upload"
+          app_location: "music-quiz"    # Der Ordner, in dem sich die React-App befindet
+          output_location: "music-quiz/client/build"  # Das Build-Verzeichnis
