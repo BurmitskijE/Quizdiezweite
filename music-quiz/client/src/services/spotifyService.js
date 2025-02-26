@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const fetchSongs = async (token) => {
-    const PLAYLIST_ID = "37i9dQZEVXbJiZcmkrIHGU"; // Spotify Top 50 Global
+    const PLAYLIST_ID = "2aPuMJIeULAnHMp7w2TK6N"; 
 
   try {
     if (!token) {

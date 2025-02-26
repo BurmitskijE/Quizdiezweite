@@ -1,18 +1,15 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import "../styles/styles.css"; // Stelle sicher, dass du die Styles importierst!
 
 const GameMode = () => {
-  const navigate = useNavigate();
-
   return (
-    <div className="text-center mt-10">
-      <h1 className="text-3xl">Wähle einen Spielmodus</h1>
-      <button onClick={() => navigate("/quiz/title")} className="m-4 bg-blue-500 text-white px-6 py-3 rounded">
-        🎼 Titel erraten
-      </button>
-      <button onClick={() => navigate("/quiz/artist")} className="m-4 bg-red-500 text-white px-6 py-3 rounded">
-        🎤 Künstler erraten
-      </button>
+    <div className="game-mode-container">
+      <h1>Wähle deinen Spielmodus</h1>
+      <div className="game-mode-buttons">
+        <Link to="/quiz/title" className="quiz-button">🎤 Errate den Titel</Link>
+        <Link to="/quiz/artist" className="quiz-button">🎼 Errate den Künstler</Link>
+        <Link to="/quiz/song" className="quiz-button">🎧 Errate den Song (Spotify Player)</Link>
+      </div>
     </div>
   );
 };

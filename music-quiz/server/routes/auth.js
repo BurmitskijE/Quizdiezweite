@@ -10,7 +10,7 @@ const REDIRECT_URI = process.env.REDIRECT_URI;
 const FRONTEND_URL = process.env.FRONTEND_URL;
 
 router.get("/login", (req, res) => {
-  const scope = "user-read-private user-read-email playlist-read-private playlist-read-collaborative";
+  const scope = "user-read-private user-read-email playlist-read-private playlist-read-collaborative user-read-private user-read-email playlist-read-private playlist-read-collaborative streaming user-read-playback-state user-modify-playback-state";
   const authUrl = `https://accounts.spotify.com/authorize?${querystring.stringify({
     response_type: "code",
     client_id: CLIENT_ID,

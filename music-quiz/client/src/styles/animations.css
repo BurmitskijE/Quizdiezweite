@@ -1,46 +1,52 @@
-/* 🌟 Animation für richtige Antworten */
+.correct {
+  animation: correct-anim 1s ease-in-out;
+}
+.wrong {
+  animation: wrong-anim 1s ease-in-out;
+}
+
 @keyframes correct-anim {
-    0% { background-color: transparent; }
-    50% { background-color: rgba(30, 215, 96, 0.5); }
-    100% { background-color: transparent; }
-  }
-  
-  .correct {
-    animation: correct-anim 1s ease-in-out;
-  }
-  
-  /* ❌ Animation für falsche Antworten */
-  @keyframes wrong-anim {
-    0% { background-color: transparent; }
-    50% { background-color: rgba(255, 0, 0, 0.5); }
-    100% { background-color: transparent; }
-  }
-  
-  .wrong {
-    animation: wrong-anim 1s ease-in-out;
-  }
-  
-  /* 🎵 Quiz-Buttons */
-  .quiz-button {
-    background-color: #282828;
-    color: white;
-    padding: 12px 20px;
-    border-radius: 20px;
-    font-size: 16px;
-    cursor: pointer;
-    margin: 10px;
-    border: none;
-    transition: background 0.3s;
-  }
-  
-  .quiz-button:hover {
-    background-color: #1DB954;
-  }
-  
+  0% { background-color: transparent; }
+  50% { background-color: rgba(30, 215, 96, 0.5); }
+  100% { background-color: transparent; }
+}
+
+@keyframes wrong-anim {
+  0% { background-color: transparent; }
+  50% { background-color: rgba(255, 0, 0, 0.5); }
+  100% { background-color: transparent; }
+}
+
   /* 🖼 Album-Cover */
+  .album-cover-container {
+    position: relative;
+    overflow: hidden;
+  }
+  
   .album-cover {
-    width: 200px;
-    border-radius: 10px;
-    margin-top: 20px;
+    width: 50%;
+    height: auto;
+  }
+  
+  .blurred {
+    filter: blur(10px);
+    transition: filter 0.3s ease-in-out;
+  }
+  .correct-answer {
+    animation: correctEffect 1s ease-in-out;
+  }
+  
+  @keyframes correctEffect {
+    0% { background-color: #4caf50; }
+    100% { background-color: white; }
+  }
+  
+  .wrong-answer {
+    animation: wrongEffect 1s ease-in-out;
+  }
+  
+  @keyframes wrongEffect {
+    0% { background-color: #ff4c4c; }
+    100% { background-color: white; }
   }
   

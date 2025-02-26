@@ -74,3 +74,55 @@ body {
         width: 80%;
     }
 }
+
+.game-mode-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px; /* Abstand zwischen den Buttons */
+    margin-top: 20px;
+    flex-wrap: wrap; /* Falls zu klein, umbrechen */
+  }
+  
+  .quiz-button {
+    background-color: #1DB954;
+    color: white;
+    padding: 15px 25px;
+    border-radius: 25px;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: bold;
+    transition: background 0.3s;
+  }
+  
+  .quiz-button:hover {
+    background-color: #17a34a;
+  }
+  .back-button {
+    background-color: #ff4c4c;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-bottom: 20px;
+  }
+  
+  .back-button:hover {
+    background-color: #cc0000;
+  }
+  .back-button {
+    background-color: #ff4c4c;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-bottom: 20px;
+  }
+  
+  .back-button:hover {
+    background-color: #cc0000;
+  }
+  

@@ -10,7 +10,7 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="text-center">
+    <div className="flex flex-col justify-center items-center h-screen text-center">
       <h1 className="text-3xl mt-10">🎵 Music Quiz</h1>
       {loading ? <LoadingAnimation /> : <SpotifyLogin />}
     </div>

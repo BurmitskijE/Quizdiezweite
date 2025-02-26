@@ -5,17 +5,15 @@ const SpotifyLogin = () => {
   const [loginUrl, setLoginUrl] = useState("");
 
   useEffect(() => {
-    axios.get(`${process.env.REACT_APP_BACKEND_URL}/auth/login`)
+    axios.get("http://localhost:5000/auth/login")
       .then((res) => setLoginUrl(res.data.url))
-      .catch((err) => console.error("Auth Error:", err));
+      .catch((err) => console.error("❌ Auth Error:", err));
   }, []);
 
   return (
-    <div className="flex justify-center items-center h-screen">
+    <div className="login-container">
       {loginUrl && (
-        <a href={loginUrl} className="spotify-button">
-        Log in mit Spotify
-      </a>
+        <a href={loginUrl} className="spotify-button">Log in mit Spotify</a>
       )}
     </div>
   );
