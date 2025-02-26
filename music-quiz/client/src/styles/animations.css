@@ -1,0 +1,46 @@
+/* 🌟 Animation für richtige Antworten */
+@keyframes correct-anim {
+    0% { background-color: transparent; }
+    50% { background-color: rgba(30, 215, 96, 0.5); }
+    100% { background-color: transparent; }
+  }
+  
+  .correct {
+    animation: correct-anim 1s ease-in-out;
+  }
+  
+  /* ❌ Animation für falsche Antworten */
+  @keyframes wrong-anim {
+    0% { background-color: transparent; }
+    50% { background-color: rgba(255, 0, 0, 0.5); }
+    100% { background-color: transparent; }
+  }
+  
+  .wrong {
+    animation: wrong-anim 1s ease-in-out;
+  }
+  
+  /* 🎵 Quiz-Buttons */
+  .quiz-button {
+    background-color: #282828;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 20px;
+    font-size: 16px;
+    cursor: pointer;
+    margin: 10px;
+    border: none;
+    transition: background 0.3s;
+  }
+  
+  .quiz-button:hover {
+    background-color: #1DB954;
+  }
+  
+  /* 🖼 Album-Cover */
+  .album-cover {
+    width: 200px;
+    border-radius: 10px;
+    margin-top: 20px;
+  }
+  
