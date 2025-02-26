@@ -33,5 +33,5 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           action: "upload"
           app_location: "music-quiz/client"  # Ordner der React-App
-          output_location: "music-quiz/client" # Output-Ordner nach Build
+          output_location: "music-quiz/" # Output-Ordner nach Build
           api_location: "music-quiz/server"  # Kein Backend notwendig für Static Web Apps
