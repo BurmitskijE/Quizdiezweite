@@ -1,0 +1,128 @@
+/* 🎵 Spotify Green & Dark Theme */
+:root {
+    --spotify-green: #1DB954;
+    --spotify-dark: #191414;
+    --spotify-light: #282828;
+    --text-color: #fff;
+}
+
+/* 🌑 Grundlegendes Styling */
+body {
+    margin: 0;
+    font-family: "Arial", sans-serif;
+    background-color: var(--spotify-dark);
+    color: var(--text-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* 🏠 Hauptcontainer */
+#root {
+    width: 100%;
+    max-width: 500px;
+    text-align: center;
+}
+
+/* 🟩 Spotify-Button */
+.spotify-button {
+    background-color: var(--spotify-green);
+    color: var(--text-color);
+    padding: 15px 30px;
+    border: none;
+    border-radius: 30px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.spotify-button:hover {
+    background-color: #17a74b;
+}
+
+/* 🎶 Quiz-Buttons */
+.quiz-button {
+    background-color: var(--spotify-light);
+    color: var(--text-color);
+    padding: 12px 20px;
+    border-radius: 20px;
+    font-size: 16px;
+    cursor: pointer;
+    margin: 10px;
+    border: none;
+    transition: background 0.3s;
+}
+
+.quiz-button:hover {
+    background-color: #333;
+}
+
+/* 🖼 Album-Cover */
+.album-cover {
+    width: 200px;
+    border-radius: 10px;
+    margin-top: 20px;
+}
+
+/* 📱 Mobile-Friendly */
+@media (max-width: 600px) {
+    .spotify-button {
+        width: 80%;
+    }
+}
+
+.game-mode-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px; /* Abstand zwischen den Buttons */
+    margin-top: 20px;
+    flex-wrap: wrap; /* Falls zu klein, umbrechen */
+  }
+  
+  .quiz-button {
+    background-color: #1DB954;
+    color: white;
+    padding: 15px 25px;
+    border-radius: 25px;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: bold;
+    transition: background 0.3s;
+  }
+  
+  .quiz-button:hover {
+    background-color: #17a34a;
+  }
+  .back-button {
+    background-color: #ff4c4c;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-bottom: 20px;
+  }
+  
+  .back-button:hover {
+    background-color: #cc0000;
+  }
+  .back-button {
+    background-color: #ff4c4c;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-bottom: 20px;
+  }
+  
+  .back-button:hover {
+    background-color: #cc0000;
+  }
+  
