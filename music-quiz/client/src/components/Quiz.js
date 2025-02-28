@@ -10,6 +10,7 @@ const Quiz = ({ token, mode }) => {
   const [answer, setAnswer] = useState("");
   const [score, setScore] = useState(0);
   const [feedback, setFeedback] = useState(""); // Richtig/Falsch Animation
+  const [blurLevel, setBlurLevel] = useState(10); // Startet mit starkem Blur
 
   useEffect(() => {
     const loadSongs = async () => {
@@ -59,12 +60,8 @@ const Quiz = ({ token, mode }) => {
   return currentSong ? (
     <div className={`text-center ${feedback}`}>
       <h2 className="text-xl">Punkte: {score}</h2>
-      <div className="album-cover-container">
-      <img 
-      src={currentSong.albumCover} 
-      alt="Album Cover" 
-      className="album-cover blurred"
-      />
+      <div className="album-cover" style={{ filter: `blur(${blurLevel}px)` }}>
+        <img src={currentSong?.albumCover} alt="Album Cover" />
       </div>
       {currentSong.previewUrl && <audio src={currentSong.previewUrl} controls autoPlay />}
 

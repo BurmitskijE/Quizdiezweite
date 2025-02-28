@@ -7,6 +7,12 @@ export function loginWithSpotify() {
     const url = `${AUTH_URL}?client_id=${CLIENT_ID}&response_type=token&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&scope=${encodeURIComponent(SCOPES)}`;
     window.location.href = url;  
 }
+export function refreshAccessToken() {
+  console.log("🔄 Spotify Token erneuern...");
+
+  localStorage.removeItem("spotify_token");  // Alten Token löschen
+  loginWithSpotify(); // Startet die Authentifizierung erneut
+}
 
 export function getAccessTokenFromUrl() {  
     const hash = window.location.hash.substring(1);  

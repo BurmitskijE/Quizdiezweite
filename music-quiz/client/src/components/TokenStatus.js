@@ -1,11 +1,12 @@
-import React from "react";
-import "../styles/TokenStatus.css"; // Import the CSS file
+import React from "react"; 
+import { refreshAccessToken } from "../auth"; 
+import "../styles/TokenStatus.css"; // Import CSS
 
 const TokenStatus = ({ accessToken }) => {
   return (
     <div className="token-status">
       <p>🔑 Eingeloggt als: {accessToken}</p>
-      <button onClick={() => window.location.reload()}>🔄 Refresh Token</button>
+      <button onClick={refreshAccessToken}>🔄 Refresh Token</button>
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import { loginWithSpotify, saveAccessToken, getAccessToken } from "./auth";
+import { loginWithSpotify, saveAccessToken, getAccessToken, refreshAccessToken } from "./auth";
 import TokenStatus from "./components/TokenStatus";
 import GameMode from "./pages/GameMode";
 import QuizPage from "./pages/QuizPage";
@@ -15,6 +15,14 @@ const App = () => {
   useEffect(() => {
     saveAccessToken();
     setToken(getAccessToken());
+
+    // 🔄 Automatischer Token Refresh alle 55 Minuten (vor Ablauf der 60 Minuten)
+    const refreshInterval = setInterval(() => {
+      console.log("🔄 Automatischer Token-Refresh...");
+      refreshAccessToken();
+    }, 55 * 60 * 1000); // 55 Minuten
+
+    return () => clearInterval(refreshInterval);
   }, []);
 
   return (
