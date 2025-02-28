@@ -104,7 +104,7 @@ const SongQuiz = ({ accessToken, playlistId, deviceId }) => {
   // 🎵 6️⃣ Antwort prüfen
   const checkAnswer = (selectedTrack) => {
     clearTimeout(timeoutId); // 🔥 Timer stoppen, falls das Lied erraten wurde
-    
+
     if (selectedTrack.id === currentSong.id) {
       setFeedback("✅ Richtig!");
       document.body.classList.add("correct-answer");
