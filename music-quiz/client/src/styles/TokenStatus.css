@@ -1,0 +1,22 @@
+/* filepath: /workspaces/Quizdiezweite/music-quiz/client/src/styles/TokenStatus.css */
+.token-status {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.token-status p {
+  margin: 0;
+  font-size: 14px;
+}
+
+.token-status button {
+  margin-top: 5px;
+  padding: 5px 10px;
+  font-size: 14px;
+  cursor: pointer;
+}
