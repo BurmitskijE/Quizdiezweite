@@ -7,7 +7,7 @@ export const fetchSongs = async (token) => {
       return [];
     }
 
-    const url = "https://api.spotify.com/v1/me/top/tracks?limit=50"; // ✅ Top 50 Lieblingssongs
+    const url = "https://api.spotify.com/v1/me/top/tracks?limit=50"; // Top 50 Lieblingssongs
     console.log("API-Anfrage an:", url);
 
     const response = await axios.get(url, {
