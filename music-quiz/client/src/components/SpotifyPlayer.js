@@ -8,6 +8,7 @@ const SpotifyPlayer = ({ accessToken, onReady }) => {
   useEffect(() => {
     if (!accessToken) {
       console.warn("⚠️ Kein Spotify Access Token verfügbar!");
+      loginWithSpotify();
       return;
     }
 
@@ -35,7 +36,7 @@ const SpotifyPlayer = ({ accessToken, onReady }) => {
         setDeviceId(device_id);
         setIsReady(true);
         onReady(device_id);
-        await activateDevice(device_id); // Gerät aktivieren
+        await activateSpotifyDevice(device_id, accessToken); // Gerät aktivieren
       });
 
       newPlayer.addListener("not_ready", ({ device_id }) => {
@@ -78,11 +79,11 @@ const SpotifyPlayer = ({ accessToken, onReady }) => {
     };
   }, [accessToken]);
 
-  const activateDevice = async (deviceId) => {
+  const activateSpotifyDevice = async (deviceId, accessToken) => {
     try {
-      console.log("🔄 Gerät aktivieren:", deviceId);
+      console.log("🎵 Versuche Spotify Web Player als aktives Gerät zu setzen...");
 
-      const res = await fetch("https://api.spotify.com/v1/me/player", {
+      const response = await fetch("https://api.spotify.com/v1/me/player", {
         method: "PUT",
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -91,13 +92,13 @@ const SpotifyPlayer = ({ accessToken, onReady }) => {
         body: JSON.stringify({ device_ids: [deviceId], play: false }),
       });
 
-      if (!res.ok) {
-        console.error("❌ Fehler beim Aktivieren des Players:", await res.text());
+      if (!response.ok) {
+        console.error("❌ Fehler beim Aktivieren des Spotify-Geräts:", await response.text());
       } else {
-        console.log("✅ Gerät erfolgreich als Spotify-Wiedergabegerät gesetzt.");
+        console.log("✅ Spotify Web Player erfolgreich als aktives Gerät gesetzt.");
       }
     } catch (error) {
-      console.error("❌ Fehler beim Aktivieren des Spotify-Geräts:", error);
+      console.error("❌ Fehler beim Aktivieren des Geräts:", error);
     }
   };
 
