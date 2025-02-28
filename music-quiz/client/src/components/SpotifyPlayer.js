@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 
+const SPOTIFY_API_URL = "https://api.spotify.com/v1"; // ✅ API-URL als Konstante
+
 const SpotifyPlayer = ({ accessToken, onReady }) => {
   const [player, setPlayer] = useState(null);
   const [deviceId, setDeviceId] = useState(null);
@@ -12,7 +14,6 @@ const SpotifyPlayer = ({ accessToken, onReady }) => {
       return;
     }
 
-    // Spotify SDK Script einfügen
     const script = document.createElement("script");
     script.src = "https://sdk.scdn.co/spotify-player.js";
     script.async = true;
@@ -30,13 +31,12 @@ const SpotifyPlayer = ({ accessToken, onReady }) => {
         volume: 0.5,
       });
 
-      // Player Event-Listener hinzufügen
       newPlayer.addListener("ready", async ({ device_id }) => {
         console.log("✅ Spotify Player ist bereit mit ID:", device_id);
         setDeviceId(device_id);
         setIsReady(true);
         onReady(device_id);
-        await activateSpotifyDevice(device_id, accessToken); // Gerät aktivieren
+        await activateSpotifyDevice(device_id, accessToken);
       });
 
       newPlayer.addListener("not_ready", ({ device_id }) => {
@@ -49,14 +49,13 @@ const SpotifyPlayer = ({ accessToken, onReady }) => {
       });
 
       newPlayer.addListener("authentication_error", ({ message }) => {
-        console.error("❌ Authentifizierungsfehler:", message);
+        console.error("❌ Authentifizierungsfehler – Token könnte abgelaufen sein!", message);
       });
 
       newPlayer.addListener("account_error", ({ message }) => {
         console.error("❌ Konto-Fehler:", message);
       });
 
-      // Player verbinden
       newPlayer.connect().then((success) => {
         if (success) {
           console.log("🎵 Spotify Player erfolgreich verbunden!");
@@ -79,11 +78,12 @@ const SpotifyPlayer = ({ accessToken, onReady }) => {
     };
   }, [accessToken]);
 
+  // ✅ API-URL wird hier genutzt
   const activateSpotifyDevice = async (deviceId, accessToken) => {
     try {
-      console.log("🎵 Versuche Spotify Web Player als aktives Gerät zu setzen...");
+      console.log("🎵 Versuche, den Spotify Web Player als aktives Gerät zu setzen...");
 
-      const response = await fetch("https://api.spotify.com/v1/me/player", {
+      const response = await fetch(`${SPOTIFY_API_URL}/me/player`, {
         method: "PUT",
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -103,9 +103,7 @@ const SpotifyPlayer = ({ accessToken, onReady }) => {
   };
 
   return (
-    <p>
-      {isReady ? "🎵 Spotify Player ist bereit!" : "⏳ Lade Spotify Player..."}
-    </p>
+    <p>{isReady ? "🎵 Spotify Player ist bereit!" : "⏳ Lade Spotify Player..."}</p>
   );
 };
 
