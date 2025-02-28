@@ -1,7 +1,8 @@
 {
-  "name": "client",
+  "name": "quiz-app",
   "version": "0.1.0",
   "private": true,
+  "homepage": "./",
   "dependencies": {
     "axios": "^0.21.1",
     "react": "^18.2.0",
