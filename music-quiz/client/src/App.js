@@ -28,11 +28,11 @@ const App = () => {
             <p>Angemeldet! Du kannst jetzt das Quiz spielen.</p>
             <TokenStatus accessToken={token} />
             <Routes>
+              <Route path="/auth/callback" element={<AuthCallback />} />  
               <Route path="/" element={accessToken ? <Navigate to="/gamemode" /> : <Home />} />
               <Route path="/gamemode" element={accessToken ? <GameMode /> : <Navigate to="/" />} />
               <Route path="/quiz/:mode" element={accessToken ? <QuizPage /> : <Navigate to="/" />} />
               <Route path="/quiz/song" element={accessToken ? <SongQuizPage accessToken={accessToken} /> : <Navigate to="/" />} />
-              <Route path="/auth/callback" element={<AuthCallback />} />
             </Routes>
           </>
         )}
