@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { activateSpotifyDevice, startPlayback, checkActiveDevice } from "../utils/spotifyAPI"; // ✅ Import API-Funktionen
+import { activateSpotifyDevice, startPlayback, checkActiveDevice } from "../utils/SpotifyAPI";
 
 const SpotifyPlayer = ({ accessToken, onReady }) => {
   const [player, setPlayer] = useState(null);
