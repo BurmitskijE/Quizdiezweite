@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { activateSpotifyDevice, startPlayback, checkActiveDevice } from "../utils/SpotifyAPI";
+import axios from "axios";
 
 const SpotifyPlayer = ({ accessToken, onReady }) => {
   const [player, setPlayer] = useState(null);
   const [deviceId, setDeviceId] = useState(null);
   const [isReady, setIsReady] = useState(false);
+  const [isPremium, setIsPremium] = useState(true); // Assume user is premium by default
 
   useEffect(() => {
     if (!accessToken) {
@@ -12,6 +14,23 @@ const SpotifyPlayer = ({ accessToken, onReady }) => {
       loginWithSpotify();
       return;
     }
+
+    const checkPremiumStatus = async () => {
+      try {
+        const response = await axios.get("https://api.spotify.com/v1/me", {
+          headers: { Authorization: `Bearer ${accessToken}` },
+        });
+        setIsPremium(response.data.product === "premium");
+        if (response.data.product !== "premium") {
+          console.error("❌ Spotify Premium erforderlich!");
+        }
+      } catch (error) {
+        console.error("❌ Fehler beim Überprüfen des Premium-Status:", error.response?.data || error);
+        setIsPremium(false);
+      }
+    };
+
+    checkPremiumStatus();
 
     const script = document.createElement("script");
     script.src = "https://sdk.scdn.co/spotify-player.js";
@@ -36,9 +55,11 @@ const SpotifyPlayer = ({ accessToken, onReady }) => {
         setIsReady(true);
         onReady(device_id);
 
-        await activateSpotifyDevice(device_id, accessToken);
-        await checkActiveDevice(accessToken);
-        await startPlayback(device_id, accessToken);
+        if (isPremium) {
+          await activateSpotifyDevice(device_id, accessToken);
+          await checkActiveDevice(accessToken);
+          await startPlayback(device_id, accessToken);
+        }
       });
 
       newPlayer.addListener("not_ready", ({ device_id }) => {
@@ -78,10 +99,16 @@ const SpotifyPlayer = ({ accessToken, onReady }) => {
         player.disconnect();
       }
     };
-  }, [accessToken]);
+  }, [accessToken, isPremium]);
 
   return (
-    <p>{isReady ? "🎵 Spotify Player ist bereit!" : "⏳ Lade Spotify Player..."}</p>
+    <p>
+      {isReady
+        ? isPremium
+          ? "🎵 Spotify Player ist bereit!"
+          : "❌ Spotify Premium erforderlich!"
+        : "⏳ Lade Spotify Player..."}
+    </p>
   );
 };
 
