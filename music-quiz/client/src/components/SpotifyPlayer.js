@@ -45,7 +45,7 @@ const SpotifyPlayer = ({ accessToken, onReady }) => {
   const activateDevice = async (deviceId) => {
     try {
       console.log("🔄 Gerät aktivieren:", deviceId);
-  
+
       const res = await fetch("https://api.spotify.com/v1/me/player", {
         method: "PUT",
         headers: {
@@ -54,7 +54,7 @@ const SpotifyPlayer = ({ accessToken, onReady }) => {
         },
         body: JSON.stringify({ device_ids: [deviceId], play: false }),
       });
-  
+
       if (!res.ok) {
         console.error("❌ Fehler beim Aktivieren des Players:", await res.text());
       } else {
@@ -67,6 +67,5 @@ const SpotifyPlayer = ({ accessToken, onReady }) => {
 
   return <p>{deviceId ? "Player bereit! 🎵" : "Lade Spotify Player..."}</p>;
 };
-
 
 export default SpotifyPlayer;
