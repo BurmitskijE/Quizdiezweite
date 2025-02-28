@@ -1,10 +1,10 @@
-import { useState, useEffect } from "react";
+import React from "react";
 
-const TokenStatus = ({ accessToken, refreshAccessToken }) => {
+const TokenStatus = ({ accessToken }) => {
   return (
-    <div className="token-status">
-      <p>🔑 Eingeloggt als: {accessToken ? `${accessToken.substring(0, 10)}...` : "Nicht eingeloggt"}</p>
-      <button onClick={refreshAccessToken} className="refresh-button">🔄 Refresh Token</button>
+    <div>
+      <p>🔑 Eingeloggt als: {accessToken}</p>
+      <button onClick={() => window.location.reload()}>🔄 Refresh Token</button>
     </div>
   );
 };

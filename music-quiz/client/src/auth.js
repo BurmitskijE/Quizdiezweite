@@ -14,14 +14,18 @@ export function getAccessTokenFromUrl() {
     return params.get("access_token");  
 }
 
-export function saveAccessToken() {  
-    const token = getAccessTokenFromUrl();  
-    if (token) {  
-        sessionStorage.setItem("spotify_token", token);  
-        window.history.replaceState({}, document.title, "/");  
-    }  
-}
+export const saveAccessToken = () => {
+  const hash = window.location.hash;
+  if (hash) {
+    const params = new URLSearchParams(hash.substring(1));
+    const accessToken = params.get("access_token");
+    if (accessToken) {
+      localStorage.setItem("spotify_token", accessToken);
+      window.history.replaceState({}, document.title, "/");
+    }
+  }
+};
 
-export function getAccessToken() {  
-    return sessionStorage.getItem("spotify_token");  
-}
+export const getAccessToken = () => {
+  return localStorage.getItem("spotify_token");
+};
