@@ -1,9 +1,12 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import "../styles/styles.css";
 import "../styles/animations.css"; // 🔥 Animationen importieren
 
-const SongQuiz = ({ accessToken, playlistId, deviceId }) => {
+const SongQuiz = ({ accessToken, deviceId }) => {
+  const [playlists, setPlaylists] = useState([]);
+  const [selectedPlaylist, setSelectedPlaylist] = useState(null);
   const [songs, setSongs] = useState([]);
   const [currentSong, setCurrentSong] = useState(null);
   const [options, setOptions] = useState([]);
@@ -12,34 +15,45 @@ const SongQuiz = ({ accessToken, playlistId, deviceId }) => {
   const navigate = useNavigate();
   let timeoutId; // Speichert den Timer für den 15-Sekunden-Countdown
 
-  // 🎵 1️⃣ Playlist-Songs abrufen
+  // 🎵 1️⃣ Playlists abrufen
   useEffect(() => {
-    const fetchTracks = async () => {
-      if (!playlistId) return;
-
-      const res = await fetch(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`, {
+    const fetchPlaylists = async () => {
+      const url = "https://api.spotify.com/v1/me/playlists?limit=50";
+      const response = await axios.get(url, {
         headers: { Authorization: `Bearer ${accessToken}` },
       });
-      const data = await res.json();
-
-      const tracks = data.items
-        .filter((item) => item.track) // Falls `item.track` null ist, überspringen
-        .map((item) => ({
-          id: item.track.id,
-          uri: item.track.uri,
-          name: item.track.name,
-          albumCover: item.track.album.images[0].url, // 🔥 Album Cover hinzufügen
-          duration_ms: item.track.duration_ms || 180000,
-        }));
-
-      setSongs(tracks);
-      startNewRound(tracks);
+      setPlaylists(response.data.items);
     };
 
-    fetchTracks();
-  }, [playlistId]);
+    if (accessToken) {
+      fetchPlaylists();
+    }
+  }, [accessToken]);
 
-  // 🎵 2️⃣ Neues Lied starten
+  // 🎵 2️⃣ Playlist-Songs abrufen
+  const fetchTracks = async (playlistId) => {
+    if (!playlistId) return;
+
+    const res = await fetch(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`, {
+      headers: { Authorization: `Bearer ${accessToken}` },
+    });
+    const data = await res.json();
+
+    const tracks = data.items
+      .filter((item) => item.track) // Falls `item.track` null ist, überspringen
+      .map((item) => ({
+        id: item.track.id,
+        uri: item.track.uri,
+        name: item.track.name,
+        albumCover: item.track.album.images[0].url, // 🔥 Album Cover hinzufügen
+        duration_ms: item.track.duration_ms || 180000,
+      }));
+
+    setSongs(tracks);
+    startNewRound(tracks);
+  };
+
+  // 🎵 3️⃣ Neues Lied starten
   const startNewRound = (tracks) => {
     if (tracks.length === 0) return;
 
@@ -49,7 +63,7 @@ const SongQuiz = ({ accessToken, playlistId, deviceId }) => {
     setBlurLevel(10); // 🔥 Album Cover wieder unscharf setzen
   };
 
-  // 🎵 3️⃣ Zufällige 15 Sekunden abspielen
+  // 🎵 4️⃣ Zufällige 15 Sekunden abspielen
   const playRandomPart = async () => {
     if (!deviceId || !currentSong) return;
 
@@ -88,18 +102,13 @@ const SongQuiz = ({ accessToken, playlistId, deviceId }) => {
     }, 15000);
   };
 
-  // 🎵 4️⃣ Wiedergabe stoppen
+  // 🎵 5️⃣ Wiedergabe stoppen
   const stopPlayback = async () => {
     await fetch("https://api.spotify.com/v1/me/player/pause", {
       method: "PUT",
       headers: { Authorization: `Bearer ${accessToken}` },
     });
   };
-
-  // 🎵 5️⃣ Automatisch Song starten
-  useEffect(() => {
-    if (currentSong) playRandomPart();
-  }, [currentSong]);
 
   // 🎵 6️⃣ Antwort prüfen
   const checkAnswer = (selectedTrack) => {
@@ -132,18 +141,41 @@ const SongQuiz = ({ accessToken, playlistId, deviceId }) => {
           ⬅ Zurück zur Übersicht
         </button>
       </div>
-      <h2>Errate den Song! 🎵</h2>
-      <div className="album-cover" style={{ filter: `blur(${blurLevel}px)` }}>
-        <img src={currentSong?.albumCover} alt="Album Cover" />
-      </div>
-      <p>{feedback}</p>
-      <div className="options-container">
-        {options.map((track) => (
-          <button key={track.id} onClick={() => checkAnswer(track)} className="quiz-button">
-            {track.name}
-          </button>
-        ))}
-      </div>
+      {!selectedPlaylist ? (
+        <div>
+          <h2>Wähle eine Playlist</h2>
+          <ul>
+            {playlists.map((playlist) => (
+              <li key={playlist.id}>
+                <button onClick={() => {
+                  setSelectedPlaylist(playlist.id);
+                  fetchTracks(playlist.id);
+                }}>
+                  {playlist.name}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ) : (
+        currentSong && (
+          <div className={`text-center ${feedback}`}>
+            <h2 className="text-xl">Errate den Song! 🎵</h2>
+            <div className="album-cover" style={{ filter: `blur(${blurLevel}px)` }}>
+              <img src={currentSong?.albumCover} alt="Album Cover" />
+            </div>
+            {currentSong.previewUrl && <audio src={currentSong.previewUrl} controls autoPlay />}
+
+            <div className="options-container">
+              {options.map((track) => (
+                <button key={track.id} onClick={() => checkAnswer(track)} className="quiz-button">
+                  {track.name}
+                </button>
+              ))}
+            </div>
+          </div>
+        )
+      )}
     </div>
   );
 };
