@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { fetchSongs } from "../services/spotifyService";
 import Question from "./Question";
 import "../styles/animations.css"; // Importiert CSS für Animationen
@@ -11,6 +12,7 @@ const Quiz = ({ token, mode }) => {
   const [score, setScore] = useState(0);
   const [feedback, setFeedback] = useState(""); // Richtig/Falsch Animation
   const [blurLevel, setBlurLevel] = useState(10); // Startet mit starkem Blur
+  const navigate = useNavigate();
 
   useEffect(() => {
     const loadSongs = async () => {
@@ -57,10 +59,14 @@ const Quiz = ({ token, mode }) => {
     }, 1000);
   };
 
+  const handleBack = () => {
+    navigate("/gamemode");
+  };
+
   return currentSong ? (
     <div className={`text-center ${feedback}`}>
       <div className="top-bar">
-        <p className="login-status">Eingeloggt als: {accessToken.substring(0, 10)}...</p>
+        <p className="login-status">Eingeloggt als: {token.substring(0, 10)}...</p>
         <button onClick={handleBack} className="back-button">
           ⬅ Zurück zur Übersicht
         </button>

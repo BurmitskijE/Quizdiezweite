@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-
-const SPOTIFY_API_URL = "https://api.spotify.com/v1"; // ✅ API-URL als Konstante
+import { activateSpotifyDevice, startPlayback, checkActiveDevice } from "../utils/spotifyAPI"; // ✅ Import API-Funktionen
 
 const SpotifyPlayer = ({ accessToken, onReady }) => {
   const [player, setPlayer] = useState(null);
@@ -36,7 +35,10 @@ const SpotifyPlayer = ({ accessToken, onReady }) => {
         setDeviceId(device_id);
         setIsReady(true);
         onReady(device_id);
+
         await activateSpotifyDevice(device_id, accessToken);
+        await checkActiveDevice(accessToken);
+        await startPlayback(device_id, accessToken);
       });
 
       newPlayer.addListener("not_ready", ({ device_id }) => {
@@ -77,30 +79,6 @@ const SpotifyPlayer = ({ accessToken, onReady }) => {
       }
     };
   }, [accessToken]);
-
-  // ✅ API-URL wird hier genutzt
-  const activateSpotifyDevice = async (deviceId, accessToken) => {
-    try {
-      console.log("🎵 Versuche, den Spotify Web Player als aktives Gerät zu setzen...");
-
-      const response = await fetch(`${SPOTIFY_API_URL}/me/player`, {
-        method: "PUT",
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ device_ids: [deviceId], play: false }),
-      });
-
-      if (!response.ok) {
-        console.error("❌ Fehler beim Aktivieren des Spotify-Geräts:", await response.text());
-      } else {
-        console.log("✅ Spotify Web Player erfolgreich als aktives Gerät gesetzt.");
-      }
-    } catch (error) {
-      console.error("❌ Fehler beim Aktivieren des Geräts:", error);
-    }
-  };
 
   return (
     <p>{isReady ? "🎵 Spotify Player ist bereit!" : "⏳ Lade Spotify Player..."}</p>
