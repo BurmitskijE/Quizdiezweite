@@ -59,6 +59,12 @@ const Quiz = ({ token, mode }) => {
 
   return currentSong ? (
     <div className={`text-center ${feedback}`}>
+      <div className="top-bar">
+        <p className="login-status">Eingeloggt als: {accessToken.substring(0, 10)}...</p>
+        <button onClick={handleBack} className="back-button">
+          ⬅ Zurück zur Übersicht
+        </button>
+      </div>
       <h2 className="text-xl">Punkte: {score}</h2>
       <div className="album-cover" style={{ filter: `blur(${blurLevel}px)` }}>
         <img src={currentSong?.albumCover} alt="Album Cover" />
