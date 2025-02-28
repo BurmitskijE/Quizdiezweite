@@ -29,10 +29,10 @@ const App = () => {
             <TokenStatus accessToken={token} />
             <Routes>
               <Route path="/auth/callback" element={<AuthCallback />} />  
-              <Route path="/" element={accessToken ? <Navigate to="/gamemode" /> : <Home />} />
-              <Route path="/gamemode" element={accessToken ? <GameMode /> : <Navigate to="/" />} />
-              <Route path="/quiz/:mode" element={accessToken ? <QuizPage /> : <Navigate to="/" />} />
-              <Route path="/quiz/song" element={accessToken ? <SongQuizPage accessToken={accessToken} /> : <Navigate to="/" />} />
+              <Route path="/" element={token ? <Navigate to="/gamemode" /> : <Home />} />
+              <Route path="/gamemode" element={token ? <GameMode /> : <Navigate to="/" />} />
+              <Route path="/quiz/:mode" element={token ? <QuizPage /> : <Navigate to="/" />} />
+              <Route path="/quiz/song" element={token ? <SongQuizPage accessToken={token} /> : <Navigate to="/" />} />
             </Routes>
           </>
         )}
