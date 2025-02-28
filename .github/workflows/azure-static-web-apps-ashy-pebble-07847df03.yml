@@ -34,4 +34,3 @@ jobs:
           action: "upload"
           app_location: "music-quiz/client"  # Ordner der React-App
           output_location: "build" # Output-Ordner nach Build
-          api_location: "music-quiz/server"  # Kein Backend notwendig für Static Web Apps
