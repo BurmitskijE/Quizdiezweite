@@ -25,13 +25,18 @@ const App = () => {
     return () => clearInterval(refreshInterval);
   }, []);
 
-  return (
-    <Router>
-      <div className="app-container">
-        <h1>Willkommen zum Quiz</h1>
-        {!token ? (
+ return (
+  <Router>
+    <div className="app-container">
+      <h1>Willkommen zum Quiz</h1>
+      {!token ? (
+        <>
           <button onClick={loginWithSpotify}>Mit Spotify anmelden</button>
-        ) : (
+          <p style={{ fontWeight: 'bold', marginTop: '10px' }}>
+            Vor der Anmeldung bitte die Spotify-E-Mail-Adresse an 629479@fom-net.de senden, um in die App mit aufgenommen zu werden.
+          </p>
+        </>
+      ) : (
           <>
             <p>Angemeldet! Du kannst jetzt das Quiz spielen.</p>
             <TokenStatus accessToken={token} />
